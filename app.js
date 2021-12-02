@@ -4,26 +4,23 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var dishRouter = require('./routes/dishRouter')
-var promotionRouter = require('./routes/promotionRouter')
-var leadersRouter = require('./routes/leadersRouter')
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const dishRouter = require('./routes/dishRouter')
+const promotionRouter = require('./routes/promotionRouter')
+const leadersRouter = require('./routes/leadersRouter')
 
-var app = express();
-
+const app = express();
 const mongoose = require('mongoose');
-
 const Dishes = require('./models/dishes');
 
 const url = 'mongodb://localhost:27017';
-const connect = mongoose.connect(url);
-
-connect
-  .then((db) => {
+mongoose.Promise = global.Promise;
+const promise = mongoose.connect(url, {useMongoClient:true});
+promise.then((db) => {
     console.log("Connected correctly to server");
-  }, (err) => console.log(err)
-);
+  })
+  .catch((err) => console.log(err));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
