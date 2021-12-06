@@ -34,6 +34,8 @@ app.use(cookieParser());
 
 // ---------------------- AUTH
 
+. . .
+
 app.use(cookieParser('12345-67890-09876-54321'));
 
 function auth (req, res, next) {
@@ -61,14 +63,14 @@ function auth (req, res, next) {
     }
   }
   else {
-    if (req.signedCookies.user === 'admin') {
-        next();
-    }
-    else {
-        var err = new Error('You are not authenticated!');
-        err.status = 401;
-        next(err);
-    }
+      if (req.signedCookies.user === 'admin') {
+          next();
+      }
+      else {
+          var err = new Error('You are not authenticated!');
+          err.status = 401;
+          next(err);
+      }
   }
 }
 
